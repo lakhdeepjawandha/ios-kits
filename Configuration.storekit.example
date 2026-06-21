@@ -1,0 +1,5 @@
+# Rename to Configuration.storekit and create via Xcode (File > New > StoreKit Configuration File).
+# Example product IDs to define inside Xcode's editor:
+#   pro.weekly   (auto-renewable, 1 week, with intro free trial)
+#   pro.yearly   (auto-renewable, 1 year)
+# Then: Scheme > Edit Scheme > Run > Options > StoreKit Configuration > select it.
