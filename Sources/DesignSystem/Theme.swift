@@ -87,13 +87,22 @@ public extension View {
 /// ```swift
 /// .dsTheme(ThemePreset.fintechNavy.theme)
 /// ```
-public enum ThemePreset {
+public enum ThemePreset: String, CaseIterable, Sendable {
     /// Deep navy with electric blue accents — classic fintech look.
-    case fintechNavy
+    case fintechNavy = "fintechNavy"
     /// Dark charcoal with neon-green accents — terminal / pro-trader aesthetic.
-    case traderDark
+    case traderDark = "traderDark"
     /// Warm cream with gold accents — premium wealth-management feel.
-    case warmGold
+    case warmGold = "warmGold"
+
+    /// A human-readable name for this preset, suitable for theme pickers and settings UI.
+    public var displayName: String {
+        switch self {
+        case .fintechNavy: return "Fintech Navy"
+        case .traderDark:  return "Trader Dark"
+        case .warmGold:    return "Warm Gold"
+        }
+    }
 
     /// The ``Theme`` value for this preset.
     public var theme: Theme {
