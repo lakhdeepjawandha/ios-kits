@@ -55,6 +55,17 @@ public enum SubscriptionState: String, Equatable, Sendable, CaseIterable {
     }
 }
 
+/// Picks the most representative status from a subscription group: prefer an entitling state
+/// (subscribed / grace period), then billing retry, then whatever exists.
+///
+/// Shared by ``SubscriptionManager`` and ``PurchaseManager`` so both derive ``SubscriptionState``
+/// the same way.
+func mostRelevantStatus(_ statuses: [Product.SubscriptionInfo.Status]) -> Product.SubscriptionInfo.Status? {
+    statuses.first { $0.state == .subscribed || $0.state == .inGracePeriod }
+        ?? statuses.first { $0.state == .inBillingRetryPeriod }
+        ?? statuses.first
+}
+
 /// A StoreKit-independent mirror of `Product.SubscriptionInfo.RenewalState`, so the status-mapping
 /// logic stays pure and testable.
 enum RawRenewalState: Equatable, Sendable {
@@ -130,8 +141,10 @@ enum IntroOffer {
 /// Locates the bundled sample StoreKit configuration shipped with PaywallKit.
 ///
 /// ## Testing the paywall in the simulator — no paid account required
-/// PaywallKit bundles a ready-made `Configuration.storekit` describing two products:
-/// `pro.weekly` (with a **1-week free trial**) and `pro.yearly`. To exercise the paywall locally:
+/// PaywallKit bundles a ready-made `Configuration.storekit` describing four products spanning
+/// every StoreKit product type: the subscriptions `pro.weekly` (with a **1-week free trial**) and
+/// `pro.yearly`, the non-consumable `pro.lifetime`, and the consumable `credits.10`. To exercise
+/// the paywall locally:
 ///
 /// 1. Drag `Configuration.storekit` into your app target (or reference this package's copy). You
 ///    can read its contents at runtime via ``sampleURL``.

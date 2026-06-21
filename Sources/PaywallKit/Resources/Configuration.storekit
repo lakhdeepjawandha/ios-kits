@@ -1,7 +1,38 @@
 {
   "identifier" : "A1B2C3D4-0000-0000-0000-0000000000A1",
   "nonRenewingSubscriptions" : [],
-  "products" : [],
+  "products" : [
+    {
+      "displayPrice" : "99.99",
+      "familyShareable" : false,
+      "internalID" : "E1B2C3D4-0000-0000-0000-0000000000E1",
+      "localizations" : [
+        {
+          "description" : "Unlock everything forever with a one-time purchase.",
+          "displayName" : "Pro Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "pro.lifetime",
+      "referenceName" : "Pro Lifetime",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "F1B2C3D4-0000-0000-0000-0000000000F1",
+      "localizations" : [
+        {
+          "description" : "A pack of 10 credits to spend in the app.",
+          "displayName" : "10 Credits",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "credits.10",
+      "referenceName" : "10 Credits",
+      "type" : "Consumable"
+    }
+  ],
   "settings" : {
     "_applicationInternalID" : "",
     "_developerTeamID" : "",
