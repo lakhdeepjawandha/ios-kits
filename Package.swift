@@ -31,8 +31,9 @@ let package = Package(
         .target(name: "ChartsKit",      dependencies: ["RenderKit"]),
         .target(name: "VisionScanKit",  dependencies: ["CameraKit"]),
         .target(name: "PaymentsKit"),
-        .testTarget(name: "DesignSystemTests",   dependencies: ["DesignSystem"]),
-        .testTarget(name: "PaywallKitTests",     dependencies: ["PaywallKit"]),
-        .testTarget(name: "PersistenceKitTests", dependencies: ["PersistenceKit"]),
+        .testTarget(name: "DesignSystemTests",    dependencies: ["DesignSystem"]),
+        .testTarget(name: "PaywallKitTests",      dependencies: ["PaywallKit"]),
+        .testTarget(name: "PersistenceKitTests",  dependencies: ["PersistenceKit"]),
+        .testTarget(name: "AppFoundationTests",   dependencies: ["AppFoundation"]),
     ]
 )

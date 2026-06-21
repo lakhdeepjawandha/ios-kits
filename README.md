@@ -1,4 +1,4 @@
-# Kits — shared Swift Package monorepo
+# ios-kits — shared Swift Package monorepo
 
 Reusable modules for the whole app portfolio. Each app imports only what it needs and
 stays a thin shell on top of these.
@@ -20,10 +20,10 @@ stays a thin shell on top of these.
 | PaymentsKit | 🟡 seed | `PaymentService` + `MockPaymentService`. Real Apple Pay/Tap to Pay needs a paid account. |
 
 ## Add to an app (local path dependency, no account needed)
-In Xcode: **File ▸ Add Package Dependencies… ▸ Add Local…** and select this `Kits` folder.
+In Xcode: **File ▸ Add Package Dependencies… ▸ Add Local…** and select this `ios-kits` folder.
 Then add the product libraries you need to your app target. Or in another package:
 ```swift
-.package(path: "../Kits")
+.package(path: "../ios-kits")
 ```
 
 ## Testing payments without a paid Apple Developer account
