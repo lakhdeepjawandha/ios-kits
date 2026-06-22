@@ -18,12 +18,13 @@ mocks, so apps compile and demo in the sandbox today and swap in the real transp
 
 | Product | Purpose |
 |---|---|
-| **DesignSystem** | Design tokens (`DS` spacing/radius/type), a per-app `Theme` palette, and SwiftUI components (buttons, cards, banners, list rows, metric cards). |
-| **AppFoundation** | Cross-cutting utilities: `Logger.app`, analytics protocol, AUD/percent/compact/relative-date formatters, haptics, feature flags, async `Debouncer`/`Throttler`. |
+| **DesignSystem** | Design tokens (`DS` spacing/radius/type), a per-app `Theme` palette with a runtime `ThemeManager` (light/dark/system, persisted), and SwiftUI components — buttons, cards, banners, list rows, metric cards, linear/circular progress, and a paged `OnboardingCarousel`. |
+| **AppFoundation** | Cross-cutting utilities: `Logger.app`, analytics protocol, AUD/percent/compact/relative-date formatters, haptics, feature flags, async `Debouncer`/`Throttler`, a `ShareSheet` helper, and a local `NotificationScheduler`. |
 | **PersistenceKit** | SwiftData `ModelContainer` helpers, a generic `Repository` protocol + SwiftData implementation, a `KeyValueStore`, and preview helpers. |
 | **SecurityKit** | Face ID / passcode gate, a throwing `Keychain` (Codable values, configurable accessibility, biometry-gated items), and an `AppLockManager` foreground lock. |
 | **NetworkKit** | Async `APIClient` with a `Request` builder, typed `APIError`, retry + exponential backoff; a URLProtocol-driven `MockAPIClient` + fixtures; a `WebSocketClient` with auto-reconnect, ping/pong, and typed `AsyncStream`. |
-| **PaywallKit** | StoreKit 2 `SubscriptionManager` (trial/active/expired status, intro-offer eligibility), a configurable `PaywallView`, a `.requiresPro` gate, and a bundled `Configuration.storekit`. |
+| **PaywallKit** | StoreKit 2 purchasing: a `PurchaseManager` covering every product type (consumables, non-consumables, auto-renewable & non-renewing subscriptions) with a `ProductCatalog` and consumable `CreditsLedger`; a `SubscriptionManager` (trial/active/expired status, intro-offer eligibility), a configurable `PaywallView`, a `.requiresPro` gate, and a bundled `Configuration.storekit`. |
+| **SettingsKit** | A composable, theme-aware settings screen: a declarative `SettingsModel` of typed rows (toggle, button, link, navigation, theme picker, manage-subscription) plus an `AppInfoFooter`, all rendered by `SettingsScreen`. |
 | **RenderKit** | Metal toolkit: `MetalContext`, `RenderPass`, image filters (passthrough / brightness-contrast-saturation / gaussian blur / unsharp), CGImage⇄CIImage⇄texture bridging, a `FrameCompositor`, and a SwiftUI `MetalView`. |
 | **ChartsKit** | Metal candlestick / line / bar charts: a pure `TickToCandleAggregator`, viewport/scaling math, nice-number axes, and `MTKView`-backed SwiftUI views with pan/zoom/crosshair. |
 | **CameraKit** | AVFoundation capture: an `@Observable` `CaptureController` (permissions, torch, focus, front/back, photo + video, `AsyncStream<CVPixelBuffer>`), a low-latency Metal preview, and a `CameraView`. |
@@ -55,7 +56,7 @@ targets: [
 Pin a tagged release instead of a path when consuming over Git:
 
 ```swift
-.package(url: "https://github.com/lakhdeepjawandha/ios-kits.git", from: "0.1.0"),
+.package(url: "https://github.com/lakhdeepjawandha/ios-kits.git", from: "0.2.0"),
 ```
 
 Build and test the whole package:
@@ -88,6 +89,8 @@ graph:
 DesignSystem   AppFoundation   PersistenceKit
                    │                │
    PaywallKit ◄────┘             SyncKit
+       │
+   SettingsKit ◄── DesignSystem, AppFoundation
 
    SecurityKit   NetworkKit   PaymentsKit
 
@@ -117,7 +120,10 @@ stabilising: **minor** releases (`0.1 → 0.2`) may include breaking changes; **
 (`0.1.0 → 0.1.1`) are additive or fixes only. From `1.0.0` onward, breaking changes bump the
 **major**. Pin with `from: "0.1.0"` and review release notes before bumping the minor.
 
-Current release: **0.1.0** — first cohesive cut with all twelve modules implemented and tested.
+Current release: **0.2.0** — adds the **SettingsKit** module (composable, theme-aware settings
+screen) plus a runtime `ThemeManager`, progress + onboarding components, share-sheet and
+local-notification helpers in AppFoundation, and a StoreKit 2 `PurchaseManager`/`CreditsLedger`
+in PaywallKit. Thirteen modules, all tested.
 
 ## License
 
